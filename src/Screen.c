@@ -56,9 +56,10 @@ void ScreenDrawCircle(Screen *screen, int x_center, int y_center, int radius) {
 	r2 = radius * radius;
 
 	for (int x = -radius; x <= radius; x++) {
-		
+
 		delta_y_max = (int)sqrt(r2-x*x + 0.5);
 
+		// in order to color all points of the circle
 		for (int y = delta_y_max; y > -1 * delta_y_max; y--) {
 			ScreenDrawPoint(screen, x_center + x, y_center + y);
 		}
