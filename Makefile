@@ -1,7 +1,7 @@
 CC = gcc
 FLAGS = -LSDL `sdl2-config --cflags --libs` -lm
 EXEC = prog
-SRC = $(wildcard *.c)
+SRC = $(wildcard *.c src/*.c )
 OBJ = $(SRC:.c=.o)
 
 all: $(EXEC)
@@ -13,7 +13,7 @@ $(EXEC) : $(OBJ)
 		$(CC) -o $@ $^ $(FLAGS)
 
 clean :
-		rm -rf *.o
+		rm -rf src/*.o
 
 mrproper : clean
 		rm -rf $(EXEC)
