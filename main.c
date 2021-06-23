@@ -29,29 +29,9 @@ int main(int argc, char *argv[])
 
     long double delta_time = 1000; // seconds
 
-    for (short a = 0; a < object_number; a++) {
-
-      // for all object
-
-      for (short b = 0; b < object_number; b++) {
-
-        // for all object
-
-        if (&obj_list[a] != &obj_list[b]) { // we check that the two object are not the same
-
-          // We compute gravitationnal force
-          Vec force = getGravitationnalForce(obj_list[a], obj_list[b]);
-          ObjectApplyForce(&obj_list[a], force, delta_time);
-
-        }
-
-      }
-
-    }
-
-    WorldApplySpeed(obj_list, delta_time, object_number);
-
+    WorldTick(obj_list, delta_time, object_number);
     WorldDrawWorld(&screen, obj_list, object_number);
+
   }
 
   ScreenClose(&screen);

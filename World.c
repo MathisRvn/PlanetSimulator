@@ -1,5 +1,6 @@
 #include "Object.h"
 #include <SDL.h>
+#include "gravitationnalForce.h"
 
 
 #include "World.h"
@@ -59,4 +60,20 @@ void WorldApplySpeed (Object obj_list[], long double delta_time, int object_numb
   for (short a = 0; a < object_number; a++) {
     ObjectApplySpeed(&obj_list[a], delta_time);
   }
+}
+
+
+void WorldTick (Object obj_list[], long double delta_time, int object_number) {
+  for (short a = 0; a < object_number; a++) {
+    // for all object
+    for (short b = 0; b < object_number; b++) {
+      // for all object
+      if (&obj_list[a] != &obj_list[b]) { // we check that the two object are not the same
+        // We compute gravitationnal force
+        Vec force = getGravitationnalForce(obj_list[a], obj_list[b]);
+        ObjectApplyForce(&obj_list[a], force, delta_time);
+      }
+    }
+  }
+  WorldApplySpeed(obj_list, delta_time, object_number);
 }
