@@ -50,17 +50,17 @@ void ScreenDrawPoint(Screen *screen, int x, int y) {
 
 
 // Code get from the beginner guide : http://www.brainycode.com/downloads/LearningSDL011.pdf and adapted for this utilisation
-void ScreenDrawCircle(Screen *screen, int x_center, int y_center, int initial_radius) {
+void ScreenDrawCircle(Screen *screen, int x_center, int y_center, int radius) {
 
-	for (int radius = initial_radius; radius > 0; radius--) {
+	int x, delta_y_max, r2;
+	r2 = radius * radius;
 
-		int x, y, r2;
-		r2 = radius * radius;
+	for (int x = -radius; x <= radius; x++) {
+		
+		delta_y_max = (int)sqrt(r2-x*x + 0.5);
 
-		for (int x = -radius; x <= radius; x++) {
-			y = (int)sqrt(r2-x*x + 0.5);
+		for (int y = delta_y_max; y > -1 * delta_y_max; y--) {
 			ScreenDrawPoint(screen, x_center + x, y_center + y);
-			ScreenDrawPoint(screen, x_center + x, y_center - y);
 		}
 
 	}
