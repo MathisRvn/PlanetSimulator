@@ -54,3 +54,9 @@ void WorldDrawWorld (Screen *screen, Object obj_list[], int object_number) {
   ScreenRender(screen);
   SDL_Delay(10);
 }
+
+void WorldApplySpeed (Object obj_list[], long double delta_time, int object_number) {
+  for (short a = 0; a < object_number; a++) {
+    ObjectApplySpeed(&obj_list[a], delta_time);
+  }
+}

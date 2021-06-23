@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 
           // We compute gravitationnal force
           Vec force = getGravitationnalForce(obj_list[a], obj_list[b]);
-          applyForce(&obj_list[a], force, delta_time);
+          ObjectApplyForce(&obj_list[a], force, delta_time);
 
         }
 
@@ -49,11 +49,7 @@ int main(int argc, char *argv[])
 
     }
 
-    for (short a = 0; a < object_number; a++) {
-
-      applySpeed(&obj_list[a], delta_time);
-
-    }
+    WorldApplySpeed(obj_list, delta_time, object_number);
 
     WorldDrawWorld(&screen, obj_list, object_number);
   }

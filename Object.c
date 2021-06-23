@@ -10,12 +10,12 @@ Object NEW_OBJ(long double mass) {
   return obj;
 }
 
-void applySpeed(Object *obj, long double delta_time) {
+void ObjectApplySpeed(Object *obj, long double delta_time) {
   // position += speed * delta_time
   obj->position = VecAdd(obj->position, VecMul(obj->speed, delta_time));
 }
 
-void applyForce (Object *obj, Vec force, long double delta_time) {
+void ObjectApplyForce (Object *obj, Vec force, long double delta_time) {
   // delta_speed = force * delta_time / mass
   Vec delta_speed = VecMul(force, (delta_time/obj->mass));
   obj->speed = VecAdd(obj->speed, delta_speed);

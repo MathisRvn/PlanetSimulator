@@ -12,7 +12,7 @@
   } Object;
 
   Object NEW_OBJ(long double mass);
-  void applySpeed(Object *obj, long double delta_time);
-  void applyForce (Object *obj, Vec force, long double delta_time);
+  void ObjectApplySpeed(Object *obj, long double delta_time);
+  void ObjectApplyForce (Object *obj, Vec force, long double delta_time);
 
 #endif
