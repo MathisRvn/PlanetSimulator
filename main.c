@@ -7,6 +7,7 @@
 #include "Object.h"
 #include "gravitationnalForce.h"
 #include "Screen.h"
+#include "World.h"
 
 
 int main(int argc, char *argv[])
@@ -19,7 +20,7 @@ int main(int argc, char *argv[])
   moon.speed.y = 1022; // meters per seconds
 
   #define object_number 2
-  Object world[object_number] = {earth, moon};
+  Object obj_list[object_number] = {earth, moon};
 
   Screen screen;
   ScreenCreate(&screen);
@@ -36,11 +37,11 @@ int main(int argc, char *argv[])
 
         // for all object
 
-        if (&world[a] != &world[b]) { // we check that the two object are not the same
+        if (&obj_list[a] != &obj_list[b]) { // we check that the two object are not the same
 
           // We compute gravitationnal force
-          Vec force = getGravitationnalForce(world[a], world[b]);
-          applyForce(&world[a], force, delta_time);
+          Vec force = getGravitationnalForce(obj_list[a], obj_list[b]);
+          applyForce(&obj_list[a], force, delta_time);
 
         }
 
@@ -50,57 +51,11 @@ int main(int argc, char *argv[])
 
     for (short a = 0; a < object_number; a++) {
 
-      applySpeed(&world[a], delta_time);
+      applySpeed(&obj_list[a], delta_time);
 
     }
 
-    // Rendering on screen
-    if (SDL_SetRenderDrawColor(screen.renderer, 0, 0, 0, SDL_ALPHA_OPAQUE) != 0)
-  		SDL_ExitWithError("can't draw color");
-
-    if (SDL_RenderClear(screen.renderer) != 0)
-		  SDL_ExitWithError("can't clear renderer");
-
-    if (SDL_SetRenderDrawColor(screen.renderer, 255, 168, 237, SDL_ALPHA_OPAQUE) != 0)
-  		SDL_ExitWithError("can't draw color");
-
-    long double x_min = 0;
-    long double x_max = 0;
-    long double y_min = 0;
-    long double y_max = 0;
-
-    for (short a = 0; a < object_number; a++) {
-
-      if (world[a].position.x < x_min)
-        x_min = world[a].position.x;
-      if (world[a].position.x > x_max)
-        x_max = world[a].position.x;
-
-      if (world[a].position.y < y_min)
-        y_min = world[a].position.y;
-      if (world[a].position.y > y_max)
-        y_max = world[a].position.y;
-
-    }
-
-    long double ratio = 0;
-    if (x_max-x_min>y_max-y_min)
-      ratio = 400 / (x_max-x_min);
-    else
-      ratio = 400 / (y_max-y_min);
-
-    if (ratio < 0)
-      ratio = ratio * -1;
-
-    for (short a = 0; a < object_number; a++) {
-      int x = (int)((world[a].position.x + fabs(x_min)) * ratio) + 50;
-      int y = (int)((world[a].position.y + fabs(y_min)) * ratio) + 50;
-      ScreenDrawCircle(&screen, x, y, 10);
-
-    }
-
-    ScreenRender(&screen);
-    SDL_Delay(10);
+    WorldDrawWorld(&screen, obj_list, object_number);
   }
 
   ScreenClose(&screen);
